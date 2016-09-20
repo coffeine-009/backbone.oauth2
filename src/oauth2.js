@@ -7,6 +7,7 @@
  */
 
 import { Model } from 'backbone/backbone';
+import _ from 'underscore/underscore';
 
 /**
  * Model for work with OAuth2 protocol via backbone.
@@ -110,7 +111,7 @@ export default class OAuth2 extends Model {
     }
 
     setClientId(id) {
-        dthis.clientId = id;
+        this.clientId = id;
     }
 
     setClientSecret(secret) {
@@ -266,14 +267,14 @@ export default class OAuth2 extends Model {
         Backbone.ajax({
             url: this.accessUrl,
             type: 'POST',
-            data: {
+            data: _.extend(this.attributes, {
                 grant_type: 'password',
                 scope: 'read',
                 client_id: this.clientId,
                 client_secret: this.clientSecret,
                 username: username,
                 password: password
-            },
+            }),
             dataType: 'json',
 
             /**

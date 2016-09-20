@@ -114,6 +114,10 @@
 	
 	var _backbone = __webpack_require__(91);
 	
+	var _underscore = __webpack_require__(92);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
@@ -121,6 +125,14 @@
 	 *
 	 * @class OAuth2
 	 */
+	/**
+	 * Copyright (c) 2014-2015, Coffeine Inc
+	 *
+	 * @author Vitaliy Tsutsman <vitaliyacm@gmail.com>
+	 *
+	 * @date 27/12/2015 2:35 PM
+	 */
+	
 	var OAuth2 = function (_Model) {
 	    (0, _inherits3.default)(OAuth2, _Model);
 	
@@ -221,7 +233,7 @@
 	    (0, _createClass3.default)(OAuth2, [{
 	        key: 'setClientId',
 	        value: function setClientId(id) {
-	            dthis.clientId = id;
+	            this.clientId = id;
 	        }
 	    }, {
 	        key: 'setClientSecret',
@@ -412,14 +424,14 @@
 	            Backbone.ajax({
 	                url: this.accessUrl,
 	                type: 'POST',
-	                data: {
+	                data: _underscore2.default.extend(this.attributes, {
 	                    grant_type: 'password',
 	                    scope: 'read',
 	                    client_id: this.clientId,
 	                    client_secret: this.clientSecret,
 	                    username: username,
 	                    password: password
-	                },
+	                }),
 	                dataType: 'json',
 	
 	                /**
@@ -586,13 +598,7 @@
 	        }
 	    }]);
 	    return OAuth2;
-	}(_backbone.Model); /**
-	                     * Copyright (c) 2014-2015, Coffeine Inc
-	                     *
-	                     * @author Vitaliy Tsutsman <vitaliyacm@gmail.com>
-	                     *
-	                     * @date 27/12/2015 2:35 PM
-	                     */
+	}(_backbone.Model);
 	
 	exports.default = OAuth2;
 
