@@ -248,10 +248,10 @@ export default class OAuth2 extends Model {
     /**
      * Authenticates against an OAuth2 endpoint
      *
-     * @param {string} username
-     * @param {string} password
+     * @param {string} code         One time code.
+     * @param {string} redirectUrl  URL to redirect.
      */
-    access(username, password) {
+    access(code, redirectUrl) {
 
         // Check if we have already authenticated
         if (this.isAuthenticated()) {
@@ -268,12 +268,10 @@ export default class OAuth2 extends Model {
             url: this.accessUrl,
             type: 'POST',
             data: _.extend(this.attributes, {
-                grant_type: 'password',
-                scope: 'read',
+                grant_type: 'authorization_code',
                 client_id: this.clientId,
-                client_secret: this.clientSecret,
-                username: username,
-                password: password
+                code: code,
+                redirect_uri: redirectUrl
             }),
             dataType: 'json',
 
