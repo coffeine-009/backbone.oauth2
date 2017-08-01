@@ -43,8 +43,8 @@ export default class OAuth2 extends Model {
             }
         };
 
-        this.accessUrl = '/oauth/token';
-        this.refreshUrl = '/oauth/token';
+        this.accessUrl = options.accessUrl || '/oauth/token';
+        this.refreshUrl = options.refreshUrl ||  '/oauth/token';
         this.revokeUrl = '/oauth/token';
         this.grantType = 'password';
         this.clientId = null;
