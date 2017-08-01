@@ -16,9 +16,9 @@ import _ from 'underscore/underscore';
  */
 export default class OAuth2 extends Model {
 
-    constructor(options) {
+    constructor(attributes, options) {
 
-        super(options);
+        super(attributes, options);
 
         /**
          * The key used for localStorage

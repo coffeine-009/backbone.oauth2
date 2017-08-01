@@ -136,7 +136,7 @@
 	var OAuth2 = function (_Model) {
 	    (0, _inherits3.default)(OAuth2, _Model);
 	
-	    function OAuth2(options) {
+	    function OAuth2(attributes, options) {
 	        (0, _classCallCheck3.default)(this, OAuth2);
 	
 	        /**
@@ -144,7 +144,7 @@
 	         *
 	         * @type String
 	         */
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (OAuth2.__proto__ || (0, _getPrototypeOf2.default)(OAuth2)).call(this, options));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (OAuth2.__proto__ || (0, _getPrototypeOf2.default)(OAuth2)).call(this, attributes, options));
 	
 	        _this.STORAGE_KEY = '__oauth2';
 	
@@ -164,8 +164,8 @@
 	            }
 	        };
 	
-	        _this.accessUrl = '/oauth/token';
-	        _this.refreshUrl = '/oauth/token';
+	        _this.accessUrl = options.accessUrl || '/oauth/token';
+	        _this.refreshUrl = options.refreshUrl || '/oauth/token';
 	        _this.revokeUrl = '/oauth/token';
 	        _this.grantType = 'password';
 	        _this.clientId = null;
@@ -401,13 +401,13 @@
 	        /**
 	         * Authenticates against an OAuth2 endpoint
 	         *
-	         * @param {string} username
-	         * @param {string} password
+	         * @param {string} code         One time code.
+	         * @param {string} redirectUrl  URL to redirect.
 	         */
 	
 	    }, {
 	        key: 'access',
-	        value: function access(username, password) {
+	        value: function access(code, redirectUrl) {
 	            var _this2 = this;
 	
 	            // Check if we have already authenticated
@@ -425,12 +425,10 @@
 	                url: this.accessUrl,
 	                type: 'POST',
 	                data: _underscore2.default.extend(this.attributes, {
-	                    grant_type: 'password',
-	                    scope: 'read',
+	                    grant_type: 'authorization_code',
 	                    client_id: this.clientId,
-	                    client_secret: this.clientSecret,
-	                    username: username,
-	                    password: password
+	                    code: code,
+	                    redirect_uri: redirectUrl
 	                }),
 	                dataType: 'json',
 	
