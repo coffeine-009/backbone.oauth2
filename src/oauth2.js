@@ -270,6 +270,7 @@ export default class OAuth2 extends Model {
             data: _.extend(this.attributes, {
                 grant_type: 'authorization_code',
                 client_id: this.clientId,
+                client_secret: this.clientSecret,
                 code: code,
                 redirect_uri: redirectUrl
             }),
@@ -332,6 +333,7 @@ export default class OAuth2 extends Model {
         Backbone.ajax({
             url: this.refreshUrl,
             type: 'POST',
+            headers: this.getAuthorizationHeader(),
             dataType: 'json',
             data: {
                 grant_type: 'refresh_token',
